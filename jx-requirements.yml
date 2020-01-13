@@ -1,35 +1,80 @@
+autoUpdate:
+  enabled: false
+  schedule: ""
+bootConfigURL: https://github.com/jenkins-x/jenkins-x-boot-config.git
 cluster:
-  clusterName: ""
-  environmentGitOwner: ""
-  environmentGitPublic: false
-  project: ""
-  provider: gke
-  zone: ""
-gitops: true
+  clusterName: test-cluster-2
+  environmentGitOwner: dgozalo
+  environmentGitPublic: true
+  gitKind: github
+  gitName: github
+  gitServer: https://github.com
+  namespace: jx
+  provider: eks
+  region: us-east-1
+  registry: 105716213112.dkr.ecr.us-east-1.amazonaws.com
 environments:
-- key: dev
-- key: staging
-- key: production
+- ingress:
+    domain: cjxd-2.cdx-dev.beescloud.com
+    externalDNS: true
+    ignoreLoadBalancer: true
+    namespaceSubDomain: -jx.
+    tls:
+      email: dgozalo@cloudbees.com
+      enabled: true
+      production: true
+  key: dev
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: staging
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: production
+gitops: true
 ingress:
-  domain: ""
-  externalDNS: false
+  domain: cjxd-2.cdx-dev.beescloud.com
+  externalDNS: true
+  ignoreLoadBalancer: true
+  namespaceSubDomain: -jx.
   tls:
-    email: ""
-    enabled: false
-    production: false
+    email: dgozalo@cloudbees.com
+    enabled: true
+    production: true
 kaniko: true
-secretStorage: local
+repository: nexus
+secretStorage: vault
 storage:
+  backup:
+    enabled: false
+    url: ""
   logs:
-    enabled: false
-    url: ""
+    enabled: true
+    url: s3://test-cluster-2-logs-ad67c5f0-0607-4a35-90c9-3605e4d820ea
   reports:
-    enabled: false
-    url: ""
+    enabled: true
+    url: s3://test-cluster-2-reports-3d688d98-98f7-4736-8fc6-381937bb4cc7
   repository:
-    enabled: false
-    url: ""
+    enabled: true
+    url: s3://test-cluster-2-repository-950dbadf-8a87-4e2d-bbc2-e847198ff9df
+vault:
+  aws:
+    autoCreate: true
+    iamUserName: cjxd-vault
+  disableURLDiscovery: true
+velero: {}
 versionStream:
-  ref: "master"
+  ref: v1.0.297
   url: https://github.com/jenkins-x/jenkins-x-versions.git
 webhook: prow
