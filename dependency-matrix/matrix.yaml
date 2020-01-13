@@ -1,0 +1,7 @@
+dependencies:
+- host: github.com
+  owner: dgozalo
+  repo: golangtestawstest2
+  url: https://github.com/dgozalo/golangtestawstest2.git
+  version: ""
+  versionURL: ""
